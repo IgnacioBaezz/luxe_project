@@ -16,17 +16,17 @@ class User(AbstractUser):
     def get_complete_name(self):
         return f"{self.first_name} {self.last_name}"
     
-# class Employee(models.Model):
-#     user = models.OneToOneField(User, on_delete=models.CASCADE)
-#     specialty = models.ManyToManyField("bookings.Service", verbose_name="Especialidad")
-#     is_available = models.BooleanField(default=True, verbose_name="Está disponible")
+class Employee(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    specialty = models.ManyToManyField("bookings.Service", verbose_name="Especialidad")
+    is_available = models.BooleanField(default=True, verbose_name="Está disponible")
 
-#     class Meta():
-#         verbose_name = "Empleado"
-#         verbose_name_plural = "Empleados"
+    class Meta():
+        verbose_name = "Empleado"
+        verbose_name_plural = "Empleados"
 
-#     def __str__(self):
-#         return self.user.get_full_name()
+    def __str__(self):
+        return self.user.get_full_name()
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)

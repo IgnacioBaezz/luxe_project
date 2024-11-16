@@ -1,0 +1,18 @@
+{% extends "core/base.html" %}
+{% load static %}
+
+{% block title %}Crear Reserva | Luxe Therapy{% endblock %}
+
+{% block main_content %}
+<div class="container my-5">
+    <h1 class="text-center mb-4">Crear Reserva</h1>
+
+    <form method="POST" id="booking-form" novalidate>
+        {% csrf_token %}
+        {{ form.as_p }} 
+        <div class="text-center">
+            <button type="submit" class="btn btn-primary">Reservar</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

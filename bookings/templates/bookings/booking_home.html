@@ -1,0 +1,33 @@
+{% extends "core/base.html" %}
+{% load static %}
+
+{% block title %}{{title}}{% endblock %}
+
+{% block main_content %}
+<div class="container my-5">
+    <h1 class="text-center mb-4">Luxe Therapy Reservas</h1>
+
+    <div class="row">
+        {% for service in services %}
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ service.name }}</h5>
+                        <p class="card-text">{{ service.description|truncatechars:100 }} <a href="{% url 'service-detail' service.id %}" class="custom-link fs-5">ver mas...</a></p>
+                        <p class="card-text"><strong>Duración:</strong> {{ service.duration }}</p>
+                        <p class="card-text"><strong>Precio:</strong> ${{ service.price }}</p>
+                        {% if service.is_active %}
+                            <a href="{% url 'booking-create'%}" class="btn btn-primary">Reservar</a>
+                        {% else %}
+                            <span class="badge bg-secondary">No disponible</span>
+                        {% endif %}
+                    </div>
+                    <div class="card-footer text-muted">
+                        <small>Actualizado el {{ service.updated_at|date:"d M Y" }}</small>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

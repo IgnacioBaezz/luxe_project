@@ -3,6 +3,19 @@
     margin: 0px;
     font-family: "Cinzel", serif;
 }
+html, body {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+}
+footer {
+    text-align: center;
+    margin-top: auto;
+}
+.main-content {
+    flex: 1;
+}
 .bg-beige {
     background-color: #EAD8C0 !important;
     padding: 20px;
@@ -10,11 +23,8 @@
 }
 
 .custom-link {
-    color: black;
+    color: #A79277;
     text-decoration: none;
-}
-.custom-link:hover{
-    color: #A79277 !important;
 }
 
 .custom-link-wh {
@@ -26,12 +36,32 @@
 }
 
 .bg-img-01 {
-    background-image: url("../img/hero-02.jpg");
+    background-image: url("../img/bg-hero01.JPG");
     background-color: rgba(0, 0, 0, 0.8);
     background-repeat: no-repeat;
+    background-size:cover;
+}
+.bg-img-02 {
+    background-image: url("../img/bg-hero02.JPG");
+    background-color: rgba(0, 0, 0, 0.8);
+    background-repeat: no-repeat;
+    background-size:cover;
+}
+.bg-img-03 {
+    background-image: url("../img/bg-hero03.JPG");
+    background-color: rgba(0, 0, 0, 0.8);
+    background-repeat: repeat-y;
     background-size:cover;
 }
 
 .bg-transparency {
     background-color: rgba(0, 0, 0, 0.5);
+}
+
+.btn-custom {
+    background-color: #A79277;
+    color: #fff;
+}
+.bg-transparency {
+    background-color: rgba(0, 0, 0, 0.6);
 }

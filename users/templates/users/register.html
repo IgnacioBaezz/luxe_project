@@ -1,14 +1,15 @@
 {% extends "core/base.html" %}
 {% load static %}
 
-{% block title %}{{title}}{% endblock %}
-{% block body %}class="background-image-02"{% endblock %}
+{% block title %}Registro | Luxe Therapy{% endblock %}
+{% block body %}class="bg-img-03"{% endblock %}
 
 {% block content %}
-<div class="row">
-    <form action="" method="post" data-bs-theme="dark"
-        class="container col-10 col-sm-8 col-md-6 col-lg-4 my-3 text-white bg-transparency rounded p-3">
-        <h2 class="mb-3 text-center">{{message1}}<br>{{message2}}</h2>
+<div class="row text-center">
+    <form action="" method="post" data-bs-theme="light" 
+        class="container col-10 col-sm-8 col-md-6 col-lg-4 my-3 bg-transparency rounded p-3">
+        <img src="{% static 'core/img/logo.svg' %}" alt="logo" class="bg-light p-3 my-3 rounded" height="140">
+        <h2 class="mb-3 text-center text-white">Registro</h2>
         <hr>
         {% csrf_token %}
         {{form.non_field_errors}}
@@ -35,7 +36,7 @@
         <button type="submit" class="btn btn-light mt-2">
             <i class="fa-solid fa-user-plus"></i> Registrar
         </button>
-        <p class="my-3">Ya tienes una cuenta con nosotros <br><a href="{% url 'login' %}">Inicia Sesion</a></p>
+        <p class="my-3 text-white">Ya tienes una cuenta con nosotros <br><a href="{% url 'login' %}" class="btn btn-custom">Inicia Sesion</a></p>
 
     </form>
 </div>

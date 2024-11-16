@@ -1,33 +1,33 @@
 {% extends "core/base.html" %}
 {% load static %}
 
-{% block title %}{{title}}{% endblock %}
-{% block body %}class="background-image-03"{% endblock %}
+{% block title %}Iniciar Sesion | Luxe Therapy{% endblock %}
+{% block body %}class="bg-img-03"{% endblock %}
 
 {% block content %}
 
 <div class="row text-center">
-    <form action="" method="post" class="container col-10 col-sm-8 col-md-6 col-lg-4 my-3 text-white bg-transparency rounded p-3">
-        <h2 class="mb-3">Iniciar Sesion</h2><hr>
+    <form action="" method="post" class="container col-10 col-sm-8 col-md-6 col-lg-4 my-3 bg-transparency rounded p-3" data-bs-theme="light">
+        <img src="{% static 'core/img/logo.svg' %}" alt="logo" class="bg-light p-3 my-3 rounded" height="140">
+        <h2 class="mb-3 text-white">Iniciar Sesion</h2><hr>
         {% csrf_token %}
         {{form.non_field_errors}}
-        <!--Start Username Field-->
-        <div class="form-floating mb-3" data-bs-theme="dark">
+        <div class="form-floating mb-3" data-bs-theme="light">
             {{form.username}}
+            {{form.username.errors}}
             <label for="{{form.username.id_for_label}}">Nombre de usuario</label>
         </div>
         {{form.username.errors}}
-        <!--End Username Field-->
-        <!--Start Password Field-->
-        <div class="form-floating mb-3" data-bs-theme="dark">
+        <div class="form-floating mb-3" data-bs-theme="light">
             {{form.password}}
+            {{ form.password.errors}}
             <label for="{{form.password.id_for_label}}">Contraseña</label>
         </div>
         {{form.password.errors}}
-        <!--End Password Field-->
-        <button type="submit" class="btn btn-light mt-3">
+        <button type="submit" class="btn btn-custom mt-3">
             <i class="fa-solid fa-circle-user"></i> Iniciar Sesion
         </button>
+        <p class="text-white mt-4">Todavia no tienes cuenta?<a href="{% url 'register' %}" class="custom-link">Registrate</a></p>
     </form>
 </div>
 {% endblock %}

@@ -1,0 +1,63 @@
+{% extends "core/base.html" %}
+{% load static %}
+
+{% block title %}{{title}}{% endblock %}
+{% block body %}class="bg-img-02"{% endblock %}
+
+{% include "core/simple_navbar.html" %}
+{% block main_content %}
+<div class="container my-5 bg-transparency p-3 text-white">
+    <h1 class="text-center mb-4">Lista de reservas</h1>
+
+    {% if bookings %}
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">Servicio</th>
+                    <th scope="col">Fecha</th>
+                    <th scope="col">Hora</th>
+                    <th scope="col">Cliente</th>
+                    <th scope="col">Comentarios</th>
+                    <th scope="col">Confirmado</th>
+                    {% if request.user.is_staff %}
+                    <th scope="col">Acciones</th>
+                    {% endif %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for booking in bookings %}
+                    <tr>
+                        <td>{{ booking.service.name }}</td>
+                        <td>{{ booking.date }}</td>
+                        <td>{{ booking.time }}</td>
+                        <td>{{ booking.usuario.get_complete_name }}</td>
+                        <td>{{ booking.notes }}</td>
+                        <td>
+                            {% if booking.confirmed %}
+                                <span class="badge bg-success">Confirmada</span>
+                            {% else %}
+                                <span class="badge bg-warning">Pendiente</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <a href="#" class="btn btn-info btn-sm">Ver</a>
+                            {% if request.user.is_staff %}
+                                <a href="#" class="btn btn-warning btn-sm">Editar</a>
+                                <form method="POST" action="#" class="d-inline-block" onsubmit="return confirm('¿Estás seguro de eliminar esta reserva?');">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                                </form>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+        <p class="text-center">No tienes reservas activas en este momento.</p>
+        <a href="{% url 'booking-create' %}" class="btn btn-custom text-center">Reserva ahora!!</a>
+    {% endif %}
+</div>
+{% endblock %}

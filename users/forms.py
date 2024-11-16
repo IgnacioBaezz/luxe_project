@@ -10,7 +10,7 @@ class UserRegisterForm(UserCreationForm):
         fields = ["username","email", "password1", "password2"]
         widgets = {
             "username":TextInput(attrs={"class":"form-control","id":"id_username","placeholder":"Nombre de usuario"}),
-            "email":EmailInput(attrs={"class":"form-control","type":"email","id":"id_email","placeholder":"Correo electronico","data-bs-theme":"dark"}),
+            "email":EmailInput(attrs={"class":"form-control","type":"email","id":"id_email","placeholder":"Correo electronico"}),
         }
         labels = {
             "username":"Nombre de usuario",

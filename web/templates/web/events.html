@@ -1,0 +1,19 @@
+{% extends "core/base.html" %}
+{% load static %}
+
+{% block title %}{{title}}{% endblock %}
+
+{% block main_content %}
+
+<h1>Eventos</h1>
+
+<div class="row">
+    {% for x in eventos %}
+    <div class="container-fluid col-4 bg-dark text-white">
+        <h2 class="fs-2">{{x.title}}</h2>
+        <p class="fs-5">{{x.content}}</p>
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock %}

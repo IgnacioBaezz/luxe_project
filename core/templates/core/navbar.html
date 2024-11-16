@@ -1,0 +1,66 @@
+{% load static %}
+<nav class="navbar bg-body-tertiary py-2">
+    <div class="container-fluid">
+        <div class="container d-none d-md-block text-center">
+            <a class="navbar-brand pe-5" href="{% url 'index' %}"><img src="{% static 'core/img/only-logo.svg' %}" alt="Logo"
+                    width="120" height="120"></a>
+            <a class="navbar-brand fs-1 mx-5" href="{% url 'index' %}">LUXE THERAPY</a>
+
+            <button class="navbar-toggler text-end border-0 ms-5" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
+                aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+                <!-- <i class="fa-solid fa-list fa-2x"></i> -->
+                <i class="fa-solid fa-align-left fa-2x"></i>
+            </button>
+        </div>
+        <div class="container d-block d-md-none text-center">
+            <a class="navbar-brand" href="{% url 'index' %}"><img src="{% static 'core/img/logo.svg' %}" alt="Logo"
+                    width="150" height="150"></a>
+
+            <button class="navbar-toggler text-end border-0 ms-5" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
+                aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+                <!-- <i class="fa-solid fa-list fa-2x"></i> -->
+                <i class="fa-solid fa-align-left fa-2x"></i>
+            </button>
+        </div>
+        <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+            <div class="offcanvas-header">
+                <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Luxe Theraphy</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+                <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                    <li class="nav-item">
+                        <a {% if request.path == '/inicio/' %} class="nav-link active" aria-current="page" {% else %}
+                            class="nav-link" {% endif %} href="{% url 'index' %}">Bienvenida</a>
+                    </li>
+                    <li class="nav-item">
+                        <a {% if request.path == '/sobre-nosotros/' %} class="nav-link active" aria-current="page" {% else %}
+                        class="nav-link" {% endif %} href="{% url 'about' %}">Sobre Nosotros</a>
+                    </li>
+                    <li class="nav-item">
+                        <a {% if request.path == '/eventos/' %} class="nav-link active" aria-current="page" {% else %}
+                        class="nav-link" {% endif %} href="{% url 'events' %}">Proximos eventos</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            Experiencias Luxe Theraphy
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a class="dropdown-item" href="#">Aroma terapia</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="#">Manicure</a>
+                            </li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" href="#">Something else here</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</nav>

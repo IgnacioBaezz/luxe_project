@@ -1,0 +1,42 @@
+{% extends "core/base.html" %}
+{% load static %}
+
+{% block title %}{{title}}{% endblock %}
+{% block body %}class="background-image-02"{% endblock %}
+
+{% block content %}
+<div class="row">
+    <form action="" method="post" data-bs-theme="dark"
+        class="container col-10 col-sm-8 col-md-6 col-lg-4 my-3 text-white bg-transparency rounded p-3">
+        <h2 class="mb-3 text-center">{{message1}}<br>{{message2}}</h2>
+        <hr>
+        {% csrf_token %}
+        {{form.non_field_errors}}
+        <div class="form-floating mb-3">
+            {{form.username}}
+            {{form.username.errors}}
+            <label for="{{form.username.id_for_label}}">Nombre de usuario</label>
+        </div>
+        <div class="form-floating mb-3">
+            {{form.email}}
+            {{form.email.errors}}
+            <label for="{{form.email.id_for_label}}">Correo electronico</label>
+        </div>
+        <div class="form-floating mb-3">
+            {{form.password1}}
+            {{form.password1.errors}}
+            <label for="{{form.password1.id_for_label}}">Contraseña</label>
+        </div>
+        <div class="form-floating mb-3">
+            {{form.password2}}
+            {{form.password2.errors}}
+            <label for="{{form.password2.id_for_label}}">Contraseña (confirmacion)</label>
+        </div>
+        <button type="submit" class="btn btn-light mt-2">
+            <i class="fa-solid fa-user-plus"></i> Registrar
+        </button>
+        <p class="my-3">Ya tienes una cuenta con nosotros <br><a href="{% url 'login' %}">Inicia Sesion</a></p>
+
+    </form>
+</div>
+{% endblock %}

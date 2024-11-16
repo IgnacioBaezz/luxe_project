@@ -1,0 +1,46 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %}{{title}}{% endblock %}
+{% block body %}class="background-image-04"{% endblock %}
+
+
+{% block main_content %}
+
+<div class="container-fluid bg-transparency rounded p-3 my-3">
+    <h1 class="text-center text-white">Bienvenido {{user.username}}</h1>
+</div>
+<div class="row my-3">
+    <div class="container col-10 bg-transparency text-white p-3">
+        <h2>Perfil de {% if user.first_name and user.last_name %}
+            {{ user.first_name }} {{ user.last_name }}
+            {% else %}
+            {{ user.username }}
+            {% endif %}
+        </h2>
+        <ul>
+            {% for key, value in usuario_info.items %}
+            {% if value is not None %}
+            <li><strong>{{ key|capfirst }}:</strong> {{ value }}</li>
+            {% endif %}
+            {% endfor %}
+            {% for group in user_groups %}
+            <li><strong>Tipo de usuario:</strong> {{group.name}}</li>
+            {% empty %}
+            <li>No pertenece a ningún grupo.</li>
+            {% endfor %}
+        </ul>
+        <hr>
+        <ul>
+            <h3>Datos sin ingresar</h3>
+            {% for key, value in usuario_info.items %}
+            {% if value is None %}
+            <li><strong>{{ key|capfirst }}</strong></li>
+            {% endif %}
+            {% endfor %}
+        </ul>
+        <a href="{% url 'owner-properties' %}" class="btn btn-info text-white me-3">Ver mis propiedades</a>
+        <a href="{% url 'profile-edit' %}" class="btn btn-info text-white">Editar mi perfil</a>
+    </div>
+</div>
+{% endblock %}

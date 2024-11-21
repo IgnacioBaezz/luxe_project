@@ -1,33 +1,71 @@
 {% extends "core/base.html" %}
 {% load static %}
 
-{% block title %}{{title}}{% endblock %}
+{% block title %}Reservas | Luxe Therapy{% endblock %}
 
 {% block main_content %}
-<div class="container my-5">
-    <h1 class="text-center mb-4">Luxe Therapy Reservas</h1>
 
-    <div class="row">
-        {% for service in services %}
-            <div class="col-md-4 mb-4">
-                <div class="card h-100 shadow-sm">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ service.name }}</h5>
-                        <p class="card-text">{{ service.description|truncatechars:100 }} <a href="{% url 'service-detail' service.id %}" class="custom-link fs-5">ver mas...</a></p>
-                        <p class="card-text"><strong>Duración:</strong> {{ service.duration }}</p>
-                        <p class="card-text"><strong>Precio:</strong> ${{ service.price }}</p>
-                        {% if service.is_active %}
-                            <a href="{% url 'booking-create'%}" class="btn btn-primary">Reservar</a>
-                        {% else %}
-                            <span class="badge bg-secondary">No disponible</span>
-                        {% endif %}
-                    </div>
-                    <div class="card-footer text-muted">
-                        <small>Actualizado el {{ service.updated_at|date:"d M Y" }}</small>
-                    </div>
-                </div>
+<!-- Hero Section -->
+<section class="d-md-none">
+    <div class="card">
+        <img src="{% static 'core/img/bg-hero01.JPG' %}" class="card-img" alt="">
+        <div class="card-img-overlay">
+            <div class="card-body">
             </div>
-        {% endfor %}
+        </div>
+    </div>
+</section>
+<div class="container my-5">
+    <h2 class="container text-center my-3 btn-custom p-2 rounded">Nuestros Servicios</h2>
+    <div class="row gx-1 justify-content-center justify-content-md-around">
+        <div class="card bg-light col-12 col-sm-6 col-md-4 text-bg-dark my-3 mx-1">
+            <img src="{% static 'bookings/img/card-05.JPG' %}" class="card-img-top" alt="...">
+            <div class="card-header">
+                <h2 class="color-custom">Atencion personalizada</h2>
+            </div>
+            <div class="card-body">
+                <p class="card-text color-custom">Cada persona es única, y en Luxe Therapy lo sabemos. Nuestro enfoque personalizado garantiza que cada detalle esté pensado para ofrecerte una experiencia inigualable.</p>
+            </div>
+            <div class="card-footer">
+                <a href="{% url 'booking-create' %}" class="btn btn-sm btn-custom mt-1">Agenda tu hora</a>
+            </div>
+        </div>
+        <div class="card bg-light col-12 col-sm-6 col-md-4 text-bg-dark my-3 mx-2">
+            <img src="{% static 'bookings/img/card-03.JPG' %}" class="card-img-top" alt="...">
+            <div class="card-header">
+                <h2 class="color-custom">Gemoterapia</h2>
+            </div>
+            <div class="card-body">
+                <p class="card-text color-custom">Experimenta la sanación a través de las vibraciones de las piedras preciosas. Deja que la energía de los cristales restablezca tu equilibrio interior y despierte tu bienestar.</p>
+            </div>
+            <div class="card-footer">
+                <a href="{% url 'booking-create' %}" class="btn btn-sm btn-custom mt-1">Agenda tu hora</a>
+            </div>
+        </div>
+        <div class="card bg-light col-12 col-sm-6 col-md-4 text-bg-dark my-3">
+            <img src="{% static 'bookings/img/card-02.JPG' %}" class="card-img-top" alt="...">
+            <div class="card-header">
+                <h2 class="color-custom">Manicure</h2>
+            </div>
+            <div class="card-body">
+                <p class="card-text color-custom">Realza la belleza de tus manos con una experiencia de manicura exclusiva. Cuida tus uñas con elegancia, precisión y el toque perfecto para complementar tu estilo.</p>
+            </div>
+            <div class="card-footer">
+                <a href="{% url 'booking-create' %}" class="btn btn-sm btn-custom mt-1">Agenda tu hora</a>
+            </div>
+        </div>
+        <div class="card bg-light col-12 col-sm-6 col-md-4 text-bg-dark my-3 mx-1">
+            <img src="{% static 'bookings/img/card-04.JPG' %}" class="card-img-top" alt="...">
+            <div class="card-header">
+                <h2 class="color-custom">Aroma terapia</h2>
+            </div>
+            <div class="card-body">
+                <p class="card-text color-custom">Déjate envolver por la magia de los aromas esenciales. Relájate y disfruta de una terapia sensorial diseñada para reducir el estrés y armonizar tu mente y cuerpo.</p>
+            </div>
+            <div class="card-footer">
+                <a href="{% url 'booking-create' %}" class="btn btn-sm btn-custom mt-1">Agenda tu hora</a>
+            </div>
+        </div>
     </div>
 </div>
 {% endblock %}

@@ -2,17 +2,112 @@
 {% load static %}
 
 {% block title %}Crear Reserva | Luxe Therapy{% endblock %}
+{% block body %}class="bg-img-03"{% endblock %}
 
 {% block main_content %}
-<div class="container my-5">
-    <h1 class="text-center mb-4">Crear Reserva</h1>
-
-    <form method="POST" id="booking-form" novalidate>
+{% if message %}
+<div class="container my-3">
+    <div class="alert alert-info">
+        {{ message }}
+    </div>
+</div>
+{% else %}
+<div class="row text-center">
+    <form method="POST" id="booking-form" novalidate
+        class="container col-10 col-sm-8 col-md-6 col-lg-4 my-3 bg-transparency rounded p-3 text-white">
+        <h2>Agendar Reserva</h2>
+        <img src="{% static 'core/img/logo.svg' %}" alt="logo" class="bg-light p-3 my-3 rounded" height="140">
         {% csrf_token %}
-        {{ form.as_p }} 
+        <div class="mb-3">
+            {{ form.service.label_tag }}
+            {{ form.service }}
+            {% if form.service.errors %}
+            <div class="text-danger my-1">
+                {{ form.service.errors }}
+            </div>
+            {% endif %}
+        </div>
+        <div class="mb-3">
+            {{ form.date.label_tag }}
+            {{ form.date }}
+            {% if form.date.errors %}
+            <div class="text-danger my-1">
+                {{ form.date.errors }}
+            </div>
+            {% endif %}
+        </div>
+        <div class="form-group">
+            <label for="time">Hora</label>
+            <select id="time" name="time" class="form-control" placeholder="Seleccione una hora">
+                <option value="">Seleccione una hora</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            {{ form.notes.label_tag }}
+            {{ form.notes }}
+            {% if form.notes.errors %}
+            <div class="text-danger my-1">
+                {{ form.notes.errors }}
+            </div>
+            {% endif %}
+        </div>
         <div class="text-center">
-            <button type="submit" class="btn btn-primary">Reservar</button>
+            <button type="submit" class="btn btn-custom"><i class="fa-regular fa-calendar-check"></i> Reservar</button>
         </div>
     </form>
 </div>
+{% endif %}
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const dateInput = document.querySelector("#id_date");
+        const serviceInput = document.querySelector("#id_service");
+        const timeSelect = document.querySelector("#time");
+
+        // Obtener la hora actual al cargar la página
+        const now = new Date();
+        const currentHour = now.toTimeString().split(":")[0]; // Solo la hora (HH)
+        const currentMinute = now.toTimeString().split(":")[1]; // Minutos (MM)
+        const currentTime = `${currentHour}:${currentMinute}`; // Formato HH:MM
+
+        // Agregar listeners
+        dateInput.addEventListener("change", fetchAvailableTimes);
+        serviceInput.addEventListener("change", fetchAvailableTimes);
+
+        function fetchAvailableTimes() {
+            const date = dateInput.value;
+            const serviceId = serviceInput.value;
+
+            // Comprobar si la fecha y servicio están disponibles antes de hacer la solicitud
+            if (date && serviceId) {
+                // Añadir la hora actual como parámetro
+                const url = `/get-available-times/?date=${date}&service_id=${serviceId}&time=${currentTime}`;
+
+                fetch(url)
+                    .then(response => response.json())
+                    .then(data => {
+                        timeSelect.innerHTML = ''; // Limpiar el select
+
+                        // Si no hay horas disponibles, mostrar el mensaje
+                        if (data.message) {
+                            const option = document.createElement("option");
+                            option.value = "";
+                            option.textContent = data.message;
+                            timeSelect.appendChild(option);
+                        } else {
+                            // Si hay horas disponibles, agregarlas al select
+                            data.available_times.forEach(time => {
+                                const option = document.createElement("option");
+                                option.value = time;
+                                option.textContent = time;
+                                timeSelect.appendChild(option);
+                            });
+                        }
+                    });
+            }
+        }
+
+        // Llamar a la función al cargar la página con la hora actual
+        fetchAvailableTimes();
+    });
+</script>
 {% endblock %}

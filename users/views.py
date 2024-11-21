@@ -7,104 +7,55 @@ from django.contrib import messages
 
 from .services import asign_group_member, asign_group_customer
 from .forms import UserRegisterForm, UserProfileForm, UserLoginForm
-from web.views import *
 from .models import User
 from time import sleep
 from bookings.views import *
+from django.urls import reverse_lazy
+from django.views.generic import CreateView, FormView
+from django.contrib.auth.views import LoginView, LogoutView
+from django.contrib.auth import login
+from django.shortcuts import redirect
+from .forms import UserRegisterForm, UserLoginForm
 
-# Vista basada en función
+class UserRegisterView(CreateView):
+    form_class = UserRegisterForm
+    template_name = "users/register.html"
+    success_url = reverse_lazy("home-bookings")
 
-@login_not_required
-def register_user(request):
-    context = {}
-    if request.method == "POST":
-        form = UserRegisterForm(request.POST)
-        context["form"] = form
-        if form.is_valid():
-            user = form.save()
-            login(request, user)
-            return redirect(home_bookings)
-    else:
-        context["form"] = UserRegisterForm
-    return render(request, "users/register.html", context)
+    def form_valid(self, form):
+        user = form.save()
+        login(self.request, user)
+        return redirect("home-bookings")
+
+class UserLoginView(LoginView):
+    form_class = UserLoginForm
+    template_name = "users/login.html"
+
+    def get_success_url(self):
+        return reverse_lazy("home-bookings")
+
+class UserLogoutView(LogoutView):
+    next_page = reverse_lazy("home-bookings")
+        
 
 @login_required
-def logout_user(request):
-    logout(request)
-    return redirect(home_bookings)
+def profile_user(request, pk):
+    u = get_object_or_404(User, pk=pk)
 
-def login_user(request):
-    context = {
-        "form":UserLoginForm,
-        "title":"Login",
-        "error":"El usuario o contraseña son incorrectos"
-    }
-    if request.method == "GET":
-        return render(request, "users/login.html", context)
-    else:
-        username = request.POST["username"]
-        try:
-            user = User.objects.get(username=username)
-        except:
-            user = None
-        
-        # user = authenticate(request,username=request.POST["username"],password=request.POST["password"])
-        if user == None:
-            return redirect(login_user)
+    user_keys = ["Nombre de usuario","Correo electronico","Numero de Telefono"]
+    user_list = [u.username,u.email,u.phone_number]
+    user_info = {}
+    i = 0
+    for x in user_list:
+        if x:
+            user_info.update({user_keys[i]:x})
         else:
-            if user.password == request.POST["password"]:
-                login(request, user)
-                return redirect(home_bookings)
-            else: redirect(login_user)
-        
-
-@login_required
-def profile_user(request):
-    if request.user.is_authenticated:
-        u = request.user
-        user_groups = request.user.groups.all()
-        user_keys = ["Nombre de usuario", "Nombre", "Apellido", "Correo electronico","Descripcion"]
-        user_list = [u.username,u.first_name,u.last_name,u.email,u.description]
-        user_info = {}
-        i = 0
-        for x in user_list:
-            if x:
-                user_info.update({user_keys[i]:x})
-            else:
-                user_info.update({user_keys[i]:None})
-            i += 1
-
-        context = {
-            "title": f"Perfil {u.username} | Báez Inmobiliaria",
-            "usuario_info": user_info,
-            "user_groups":user_groups,
-        }
-        return render(request, "users/profile.html", context)
-    else:
-        return redirect(login_user)
-
-
-@login_required
-def profile_edit(request):
-    usuario = request.user
-    
-    if request.method == "POST":
-        form = UserProfileForm(request.POST, instance=usuario)
-        
-        if form.is_valid():
-            print(form.cleaned_data)
-            if form.has_changed():
-                form.save()
-                messages.success(request, "Tu perfil ha sido actualizado exitosamente.")
-                return redirect(profile_user)
-        else:
-            print(form.errors)
-    else:
-        form = UserProfileForm(instance=usuario)
+            user_info.update({user_keys[i]:None})
+        i += 1
 
     context = {
-        "title": "Editar Perfil | Báez Inmobiliaria",
-        "form": form,
-        "user": usuario
+        "title": f"Perfil {u.username} | Luxe Therapy",
+        "usuario_info": user_info,
+        "u":u
     }
-    return render(request, "users/profile_edit.html", context)
+    return render(request, "users/profile.html", context)

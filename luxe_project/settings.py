@@ -31,6 +31,8 @@ AUTH_USER_MODEL = 'users.User'
 
 LOGIN_URL = '/usuario/iniciar-sesion/'
 
+LOGOUT_REDIRECT_URL = '/reservas/'
+
 STATIC_ROOT = ""
 
 # Application definition

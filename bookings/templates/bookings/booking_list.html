@@ -2,62 +2,141 @@
 {% load static %}
 
 {% block title %}{{title}}{% endblock %}
-{% block body %}class="bg-img-02"{% endblock %}
+{% block body %}class="bg-img-03"{% endblock %}
 
 {% include "core/simple_navbar.html" %}
 {% block main_content %}
-<div class="container my-5 bg-transparency p-3 text-white">
+<div class="container my-5 bg-transparency p-3 text-white rounded">
     <h1 class="text-center mb-4">Lista de reservas</h1>
-
+    <p class="d-sm-block d-md-none fst-italic text-center">Desliza para ver todos los datos</p>
     {% if bookings %}
     <div class="table-responsive">
-        <table class="table table-striped">
-            <thead>
+        <table class="table table-striped rounded">
+            <thead class="text-center">
                 <tr>
+                    {% if request.user.is_employee %}
+                    <th scope="col">Cliente</th>
+                    {% endif %}
+                    <th scope="col">Codigo de Reserva</th>
                     <th scope="col">Servicio</th>
                     <th scope="col">Fecha</th>
                     <th scope="col">Hora</th>
-                    <th scope="col">Cliente</th>
-                    <th scope="col">Comentarios</th>
-                    <th scope="col">Confirmado</th>
-                    {% if request.user.is_staff %}
+                    <th scope="col">Comentario</th>
+                    <th scope="col">Estado</th>
+                    {% if request.user.is_employee %}
                     <th scope="col">Acciones</th>
                     {% endif %}
                 </tr>
             </thead>
-            <tbody>
+            <tbody class="text-center">
                 {% for booking in bookings %}
-                    <tr>
-                        <td>{{ booking.service.name }}</td>
-                        <td>{{ booking.date }}</td>
-                        <td>{{ booking.time }}</td>
-                        <td>{{ booking.usuario.get_complete_name }}</td>
-                        <td>{{ booking.notes }}</td>
-                        <td>
-                            {% if booking.confirmed %}
-                                <span class="badge bg-success">Confirmada</span>
-                            {% else %}
-                                <span class="badge bg-warning">Pendiente</span>
-                            {% endif %}
-                        </td>
-                        <td>
-                            <a href="#" class="btn btn-info btn-sm">Ver</a>
-                            {% if request.user.is_staff %}
-                                <a href="#" class="btn btn-warning btn-sm">Editar</a>
-                                <form method="POST" action="#" class="d-inline-block" onsubmit="return confirm('¿Estás seguro de eliminar esta reserva?');">
-                                    {% csrf_token %}
-                                    <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
-                                </form>
-                            {% endif %}
-                        </td>
-                    </tr>
+                <tr>
+                    {% if request.user.is_employee %}
+                    <td>
+                        <a href="{% url 'profile' booking.user.id %}" class="btn btn-custom">
+                            <i class="fa-solid fa-circle-user"></i>
+                        </a>
+                    </td>
+                    {% endif %}
+                    <td>#{{ booking.id }}</td>
+                    <td>{{ booking.service.name }}</td>
+                    <td>{{ booking.date }}</td>
+                    <td>{{ booking.time }}</td>
+                    <td>
+                        {% if booking.notes is None %}
+                        No hay comentarios
+                        {% else %}
+                        <a class="custom-link" href="#" data-bs-toggle="modal"
+                            data-bs-target="#comentaryModal{{ booking.id }}">
+                            Ver Comentario
+                        </a>
+
+                        <div class="modal fade" id="comentaryModal{{ booking.id }}" tabindex="-1"
+                            aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Cometario Adicional</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        {{ booking.notes }}
+                                    </div>
+                                    <div class="modal-footer">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if booking.status == "pending" %}
+                        <span class="badge bg-warning">Pendiente</span>
+                        {% elif booking.status == "confirmed" %}
+                        <span class="badge bg-success">Confirmado</span>
+                        {% elif booking.status == "finalized" %}
+                        <span class="badge bg-primary">Finalizado</span>
+                        {% elif booking.status == "cancelled" %}
+                        <span class="badge bg-danger">Cancelado</span>
+                        {% endif %}
+                    </td>
+                    {% if request.user.is_employee %}
+                    <td>
+                        {% if booking.status == "pending" %}
+                        <a href="{% url 'change-booking-status' booking.id 'confirm' %}" class="btn btn-success btn-sm">
+                            <i class="fa-regular fa-calendar-check"></i>
+                        </a>
+                        <a href="{% url 'change-booking-status' booking.id 'cancel' %}" class="btn btn-danger btn-sm">
+                            <i class="fa-regular fa-calendar-xmark"></i>
+                        </a>
+                        {% elif booking.status == "confirmed" %}
+                        <a href="{% url 'change-booking-status' booking.id 'finalize' %}" class="btn btn-primary btn-sm">
+                            <i class="fa-solid fa-calendar-check"></i>
+                        </a>
+                        {% endif %}
+                    </td>
+                    {% endif %}
+                </tr>
                 {% endfor %}
             </tbody>
         </table>
     </div>
     {% else %}
-        <p class="text-center">No tienes reservas activas en este momento.</p>
-        <a href="{% url 'booking-create' %}" class="btn btn-custom text-center">Reserva ahora!!</a>
+    <p class="text-center">No tienes reservas activas en este momento.</p>
+    <a href="{% url 'booking-create' %}" class="btn btn-custom text-center">Reserva ahora!!</a>
     {% endif %}
+    <div class="container text-center">
+        <nav aria-label="Page navigation example" data-bs-theme="dark">
+            <ul class="pagination d-flex justify-content-center">
+                {% if bookings.has_previous %}
+                <li class="page-item">
+                    <a class="page-link text-white" href="?page={{ bookings.previous_page_number }}">Anterior</a>
+                </li>
+                {% endif %}
+                {% for num in bookings.paginator.page_range %}
+                <li class="page-item {% if bookings.number == num %}active{% endif %}">
+                    <a class="page-link text-white" href="?page={{ num }}">{{ num }}</a>
+                </li>
+                {% endfor %}
+                {% if bookings.has_next %}
+                <li class="page-item">
+                    <a class="page-link text-white" href="?page={{ bookings.next_page_number }}">Siguiente</a>
+                </li>
+                {% endif %}
+            </ul>
+        </nav>
+    </div>
+
 </div>
+{% endblock %}
+{% block extra_js %}
+<script>
+    const myModal = document.getElementById('myModal')
+    const myInput = document.getElementById('myInput')
+
+    myModal.addEventListener('shown.bs.modal', () => {
+        myInput.focus()
+    })
+</script>
 {% endblock %}

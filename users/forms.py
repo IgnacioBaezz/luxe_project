@@ -7,14 +7,16 @@ from .models import User
 class UserRegisterForm(UserCreationForm):
     class Meta():
         model = User
-        fields = ["username","email", "password1", "password2"]
+        fields = ["username","email","phone_number", "password1", "password2"]
         widgets = {
             "username":TextInput(attrs={"class":"form-control","id":"id_username","placeholder":"Nombre de usuario"}),
             "email":EmailInput(attrs={"class":"form-control","type":"email","id":"id_email","placeholder":"Correo electronico"}),
+            "phone_number":TextInput(attrs={"class":"form-control","placeholder":"Numero de celular"})
         }
         labels = {
             "username":"Nombre de usuario",
             "email":"Correo electronico",
+            "phone_number":"Numero de celular",
             "password1":"Contraseña",
             "password2":"Contraseña (confirmacion)"
         }

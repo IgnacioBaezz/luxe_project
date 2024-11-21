@@ -7,11 +7,12 @@
 {% block content %}
 
 <div class="row text-center">
-    <form action="" method="post" class="container col-10 col-sm-8 col-md-6 col-lg-4 my-3 bg-transparency rounded p-3" data-bs-theme="light">
+    <form action="" method="post" class="container col-10 col-sm-8 col-md-6 col-lg-4 my-3 bg-transparency rounded p-3"
+        data-bs-theme="light">
         <img src="{% static 'core/img/logo.svg' %}" alt="logo" class="bg-light p-3 my-3 rounded" height="140">
-        <h2 class="mb-3 text-white">Iniciar Sesion</h2><hr>
+        <h2 class="mb-3 text-white">Iniciar Sesion</h2>
+        <hr>
         {% csrf_token %}
-        {{form.non_field_errors}}
         <div class="form-floating mb-3" data-bs-theme="light">
             {{form.username}}
             {{form.username.errors}}
@@ -23,11 +24,18 @@
             {{ form.password.errors}}
             <label for="{{form.password.id_for_label}}">Contraseña</label>
         </div>
-        {{form.password.errors}}
+        {% if form.non_field_errors %}
+        <div class="alert alert-danger" role="alert">
+            {% for error in form.non_field_errors %}
+            <p class="mb-0">{{ error }}</p>
+            {% endfor %}
+        </div>
+        {% endif %}
         <button type="submit" class="btn btn-custom mt-3">
             <i class="fa-solid fa-circle-user"></i> Iniciar Sesion
         </button>
-        <p class="text-white mt-4">Todavia no tienes cuenta?<a href="{% url 'register' %}" class="custom-link">Registrate</a></p>
+        <p class="text-white mt-4">Todavia no tienes cuenta?<a href="{% url 'register' %}"
+                class="custom-link fs-5"> Registrate</a></p>
     </form>
 </div>
 {% endblock %}

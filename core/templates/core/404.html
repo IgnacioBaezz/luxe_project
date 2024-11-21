@@ -1,30 +1,11 @@
-<!DOCTYPE html>
-<html lang="es-CL">
-<head>
-    <meta charset="UTF-8">
-    <title>Página no encontrada</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            padding: 50px;
-        }
-        h1 {
-            font-size: 50px;
-        }
-        p {
-            font-size: 20px;
-        }
-        a {
-            color: #3498db;
-            text-decoration: none;
-            font-size: 18px;
-        }
-    </style>
-</head>
-<body>
-    <h1>Error 404</h1>
-    <p>Lo sentimos, la página que buscas no existe.</p>
-    <a href="/">Volver al inicio</a>
-</body>
-</html>
+{% extends "core/base.html" %}
+{% load static %}
+{% block title %}Pagina no encontrada | Luxe Therapy{% endblock %}
+
+{% block main_content %}
+<div class="container">
+<h1>Error 404</h1>
+<p>Lo sentimos, la página que buscas no existe.</p>
+<a href="{% url 'home-bookings' %}" class="btn btn-custom">Volver al inicio</a>
+</div>
+{% endblock %}

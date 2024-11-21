@@ -4,6 +4,17 @@
 {% block title %}Detalle de producto | Luxe Therapy{% endblock %}
 
 {% block main_content %}
+<div class="container mt-4">
+    <!-- Detalles del Servicio -->
+    <div class="service-detail mb-4">
+        <h2>{{ service.name }}</h2>
+        <p><strong>Descripción:</strong> {{ service.description }}</p>
+        <p><strong>Duración:</strong> {{ service.duration }}</p>
+        <p><strong>Precio:</strong> ${{ service.price }}</p>
+    </div>
 
+    <!-- Enlace para ver las reservas -->
+    <a href="{% url 'services-list' service.id %}" class="btn btn-primary">Ver Reservas</a>
+</div>
 
 {% endblock %}

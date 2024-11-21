@@ -17,7 +17,13 @@ class Service(models.Model):
         verbose_name_plural  = "Servicios"
 
     def __str__(self):
-        return self.name
+        return f"{self.name} - $ {self.price}"
+
+class BookingStatus(models.TextChoices):
+    PENDING = "pending", "Pendiente"
+    CONFIRMED = "confirmed", "Confirmado"
+    FINALIZED = "finalized", "Finalizado"
+    CANCELLED = "cancelled", "Cancelado"
 
 class Booking(models.Model):
     user = models.ForeignKey("users.User", on_delete=models.CASCADE, verbose_name="Cliente")
@@ -25,8 +31,8 @@ class Booking(models.Model):
     date = models.DateField(verbose_name="Fecha")
     time = models.TimeField(verbose_name="Hora")
     notes = models.CharField(verbose_name="Comentarios", max_length=300, blank=True, null=True)
-    active = models.BooleanField(default=False, verbose_name="Activo")
-    confirmed = models.BooleanField(default=False, verbose_name="Confirmado")
+    status = models.CharField(max_length=30, choices=BookingStatus.choices, default=BookingStatus.PENDING, verbose_name="Estado")
+    active = models.BooleanField(default=True, verbose_name="Activo")
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="Fecha de creación")
     updated_at = models.DateTimeField(auto_now=True, verbose_name="Fecha de actualización")
     employee = models.ForeignKey("users.Employee", on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Empleado asignado")
@@ -43,8 +49,18 @@ class Booking(models.Model):
         return f"Reserva de {self.user.username} - {self.service.name} el {self.date} a las {self.time}"
 
     def save(self, *args, **kwargs):
+        available_employees = []
+
         if not self.employee:
-            available_employees = Employee.objects.filter(is_available=True)
-            if available_employees.exists():
-                self.employee = choice(available_employees)
+            available_employees = Employee.objects.filter(
+                is_available=True, 
+                specialty=self.service
+            )
+
+        if available_employees:
+            employees_sorted_by_load = sorted(
+                available_employees,
+                key=lambda e: e.booking_set.filter(date=self.date).count()
+            )
+            self.employee = employees_sorted_by_load[0]
         super().save(*args, **kwargs)

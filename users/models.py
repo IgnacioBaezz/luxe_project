@@ -3,6 +3,7 @@ from django.contrib.auth.models import AbstractUser
 
 
 class User(AbstractUser):
+    phone_number = models.CharField(max_length=11, null=True, blank=True, verbose_name="Numero de telefono")
     is_employee = models.BooleanField(default=False, verbose_name="Es empleado")
     is_client = models.BooleanField(default=True, verbose_name="Es cliente")
 
@@ -26,19 +27,21 @@ class Employee(models.Model):
         verbose_name_plural = "Empleados"
 
     def __str__(self):
-        return self.user.get_full_name()
+        return f"{self.user.username}"
 
-class UserProfile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    phone_number = models.CharField(max_length=15, blank=True, null=True, verbose_name="Numero de Telefono")
-    address = models.CharField(max_length=255, blank=True, null=True, verbose_name="Direccion")
-    preferences = models.JSONField(blank=True, null=True, verbose_name="Preferencias")
+class EmployeeAvailability(models.Model):
+    employee = models.ForeignKey(Employee, on_delete=models.CASCADE, related_name="availability")
+    day_of_week = models.IntegerField(choices=[
+        (0, "Lunes"), (1, "Martes"), (2, "Miércoles"),
+        (3, "Jueves"), (4, "Viernes"), (5, "Sábado"), (6, "Domingo")
+    ])
+    start_time = models.TimeField(verbose_name="Hora de inicio")
+    end_time = models.TimeField(verbose_name="Hora de fin")
 
-    class Meta():
-        verbose_name = "Perfil de usuario"
-        verbose_name_plural = "Perfiles de usuarios"
+    class Meta:
+        verbose_name = "Disponibilidad del Empleado"
+        verbose_name_plural = "Disponibilidad de Empleados"
 
     def __str__(self):
-        return self.user.username
-    
+        return f"{self.employee.user.username} disponibilidad {self.get_day_of_week_display()}"
     

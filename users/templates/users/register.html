@@ -12,7 +12,6 @@
         <h2 class="mb-3 text-center text-white">Registro</h2>
         <hr>
         {% csrf_token %}
-        {{form.non_field_errors}}
         <div class="form-floating mb-3">
             {{form.username}}
             {{form.username.errors}}
@@ -24,6 +23,11 @@
             <label for="{{form.email.id_for_label}}">Correo electronico</label>
         </div>
         <div class="form-floating mb-3">
+            {{form.phone_number}}
+            {{form.phone_number.errors}}
+            <label for="{{form.phone_number.id_for_label}}">Numero de telefono</label>
+        </div>
+        <div class="form-floating mb-3">
             {{form.password1}}
             {{form.password1.errors}}
             <label for="{{form.password1.id_for_label}}">Contraseña</label>
@@ -33,10 +37,17 @@
             {{form.password2.errors}}
             <label for="{{form.password2.id_for_label}}">Contraseña (confirmacion)</label>
         </div>
+                {% if form.non_field_errors %}
+        <div class="alert alert-danger" role="alert">
+            {% for error in form.non_field_errors %}
+            <p class="mb-0">{{ error }}</p>
+            {% endfor %}
+        </div>
+        {% endif %}
         <button type="submit" class="btn btn-light mt-2">
             <i class="fa-solid fa-user-plus"></i> Registrar
         </button>
-        <p class="my-3 text-white">Ya tienes una cuenta con nosotros <br><a href="{% url 'login' %}" class="btn btn-custom">Inicia Sesion</a></p>
+        <p class="my-3 text-white">Ya tienes una cuenta con nosotros <br><a href="{% url 'login' %}" class="custom-link fs-5">Inicia Sesion</a></p>
 
     </form>
 </div>

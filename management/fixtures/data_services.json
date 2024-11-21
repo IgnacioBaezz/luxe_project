@@ -1,0 +1,158 @@
+[
+  {
+    "model": "bookings.service",
+    "pk": 1,
+    "fields": {
+      "name": "Manicure Tradicional",
+      "description": "Es un método de cuidado y embellecimiento de las uñas y manos incluye: Corte y limado de uñas, Cuidado de cutículas, Aplicación de esmalte de uñas, Masaje de manos, Nadis de cortesía: aceite vegetal que conecta con el chakra escogido sellando el cuidado de las manos hidratando y penetrando con aromaterapia para conectar con el chakra seleccionado.",
+      "duration": "01:00:00",
+      "price": 26000,
+      "is_active": true,
+      "created_at": "2024-11-20T00:00:00",
+      "updated_at": "2024-11-20T00:00:00"
+    }
+  },
+  {
+    "model": "bookings.service",
+    "pk": 2,
+    "fields": {
+      "name": "Manicure Diseño",
+      "description": "Es un método de cuidado y embellecimiento de las uñas y manos con el diseño que escojas. Incluye: Corte y limado de uñas, Cuidado de cutículas, Aplicación de esmalte de uñas, Masaje de manos, Nadis de cortesía: aceite vegetal que conecta con el chakra escogido sellando el cuidado de las manos hidratando y penetrando con aromaterapia para conectar con el chakra seleccionado.",
+      "duration": "01:30:00",
+      "price": 29000,
+      "is_active": true,
+      "created_at": "2024-11-20T00:00:00",
+      "updated_at": "2024-11-20T00:00:00"
+    }
+  },
+  {
+    "model": "bookings.service",
+    "pk": 3,
+    "fields": {
+      "name": "Manicure con Base Rubber",
+      "description": "Base niveladora para uñas quebradizas, delgadas, aporta fuerza y resistencia, protege la uña. Incluye: Corte y limado de uñas, Cuidado de cutículas, Aplicación de esmalte de uñas, Masaje de manos, Nadis de cortesía: aceite vegetal que conecta con el chakra escogido sellando el cuidado de las manos hidratando y penetrando con aromaterapia para conectar con el chakra seleccionado.",
+      "duration": "01:30:00",
+      "price": 35000,
+      "is_active": true,
+      "created_at": "2024-11-20T00:00:00",
+      "updated_at": "2024-11-20T00:00:00"
+    }
+  },
+  {
+    "model": "bookings.service",
+    "pk": 4,
+    "fields": {
+      "name": "Manicure con Builder Gel",
+      "description": "Gel nivelador para imperfecciones de uñas y extensiones fortaleciendo y cuidando tus uñas. Incluye: Corte y limado de uñas, Cuidado de cutículas, Aplicación de esmalte de uñas, Masaje de manos, Nadis de cortesía: aceite vegetal que conecta con el chakra escogido sellando el cuidado de las manos hidratando y penetrando con aromaterapia para conectar con el chakra seleccionado.",
+      "duration": "02:00:00",
+      "price": 45000,
+      "is_active": true,
+      "created_at": "2024-11-20T00:00:00",
+      "updated_at": "2024-11-20T00:00:00"
+    }
+  },
+  {
+    "model": "bookings.service",
+    "pk": 5,
+    "fields": {
+      "name": "Manicure Mixta",
+      "description": "Es un método de cuidado unisex para tratamiento de uñas y manos. Incluye: Corte y limado de uñas, Cuidado de cutículas, Masajes de manos, Nadis de cortesía: Aceite vegetal que conecta con el chakra escogido sellando el cuidado de las manos hidratando y penetrando con aromaterapia para conectar con el chakra seleccionado.",
+      "duration": "00:45:00",
+      "price": 16990,
+      "is_active": true,
+      "created_at": "2024-11-20T00:00:00",
+      "updated_at": "2024-11-20T00:00:00"
+    }
+  },
+  {
+    "model": "bookings.service",
+    "pk": 6,
+    "fields": {
+      "name": "Esmalte Permanente",
+      "description": "Servicio de esmaltado permanente. Si el esmaltado es del local, se cobrará solo una cortesía con agenda confirmada menor a 30 días.",
+      "duration": "00:20:00",
+      "price": 4990,
+      "is_active": true,
+      "created_at": "2024-11-20T00:00:00",
+      "updated_at": "2024-11-20T00:00:00"
+    }
+  },
+  {
+    "model": "bookings.service",
+    "pk": 7,
+    "fields": {
+      "name": "Retiro de Rubber",
+      "description": "Servicio de retiro de la base Rubber.",
+      "duration": "00:30:00",
+      "price": 4990,
+      "is_active": true,
+      "created_at": "2024-11-20T00:00:00",
+      "updated_at": "2024-11-20T00:00:00"
+    }
+  },
+  {
+    "model": "bookings.service",
+    "pk": 8,
+    "fields": {
+      "name": "Retiro de Builder Gel o Gel",
+      "description": "Servicio de retiro de Builder Gel o Gel.",
+      "duration": "00:30:00",
+      "price": 8990,
+      "is_active": true,
+      "created_at": "2024-11-20T00:00:00",
+      "updated_at": "2024-11-20T00:00:00"
+    }
+  },
+  {
+    "model": "bookings.service",
+    "pk": 9,
+    "fields": {
+      "name": "Acrílico y Extensiones",
+      "description": "Servicio de acrílico y extensiones.",
+      "duration": "00:30:00",
+      "price": 10000,
+      "is_active": true,
+      "created_at": "2024-11-20T00:00:00",
+      "updated_at": "2024-11-20T00:00:00"
+    }
+  },
+  {
+    "model": "bookings.service",
+    "pk": 10,
+    "fields": {
+      "name": "Esmalte Permanente",
+      "description": "Servicio de esmaltado permanente. Si el esmaltado es del local, se cobrará solo una cortesía con agenda confirmada menor a 30 días.",
+      "duration": "00:20:00",
+      "price": 2000,
+      "is_active": true,
+      "created_at": "2024-11-20T00:00:00",
+      "updated_at": "2024-11-20T00:00:00"
+    }
+  },
+  {
+    "model": "bookings.service",
+    "pk": 11,
+    "fields": {
+      "name": "Retiro de Rubber",
+      "description": "Servicio de retiro de la base Rubber.",
+      "duration": "00:30:00",
+      "price": 2000,
+      "is_active": true,
+      "created_at": "2024-11-20T00:00:00",
+      "updated_at": "2024-11-20T00:00:00"
+    }
+  },
+  {
+    "model": "bookings.service",
+    "pk": 12,
+    "fields": {
+      "name": "Retiro de Builder Gel o Gel",
+      "description": "Servicio de retiro de Builder Gel o Gel.",
+      "duration": "00:30:00",
+      "price": 3500,
+      "is_active": true,
+      "created_at": "2024-11-20T00:00:00",
+      "updated_at": "2024-11-20T00:00:00"
+    }
+  }
+]

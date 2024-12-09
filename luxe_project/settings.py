@@ -23,17 +23,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-n#=qqae!hy2drk$be=al1yem#0px9*-l(#ebd4eeoq9uq7!mjm'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = ["luxetherapy.cl", "www.luxetherapy.cl"]
 
 AUTH_USER_MODEL = 'users.User'
 
 LOGIN_URL = '/usuario/iniciar-sesion/'
 
-LOGOUT_REDIRECT_URL = '/reservas/'
-
-STATIC_ROOT = ""
+STATIC_ROOT = '/home/luxetherapy/luxe_project/static'
 
 # Application definition
 
@@ -89,10 +87,15 @@ WSGI_APPLICATION = 'luxe_project.wsgi.application'
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": "mydatabase",
+        "ENGINE": "django.db.backends.mysql",
+        "NAME": "luxetherapy$default",
+        "USER": "luxetherapy",
+        "PASSWORD": "Loquito3#",
+        "HOST": "luxetherapy.mysql.pythonanywhere-services.com",
+        "PORT": "3306",
     }
 }
+
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
 
